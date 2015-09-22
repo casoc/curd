@@ -1,8 +1,8 @@
-This is a CURD demo use config class instead of xml.
+#### This is a CURD demo use config class instead of xml.
 
-use:
-Spring 3.1.1
-Spring MVC 3.1.1
-Hibernate 4
-Hsqldb
+### use:
+* Spring 3.1.1
+* Spring MVC 3.1.1
+* Hibernate 4
+* Hsqldb
 
