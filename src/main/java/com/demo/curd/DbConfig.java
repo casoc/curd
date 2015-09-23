@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate3.HibernateTransactionManager;
+import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.transaction.support.ResourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -35,7 +35,7 @@ public class DbConfig {
 
     @Bean
     public SessionFactory sessionFactory() throws Exception {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        AnnotationSessionFactoryBean sessionFactory = new AnnotationSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));

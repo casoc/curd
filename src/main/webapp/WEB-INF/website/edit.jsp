@@ -1,12 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>new article</title>
+    <title>edit article</title>
 </head>
 <body>
-  <form action="/articles" method="post">
+  <form:form action="/articles" method="put">
       <%@ include file="form.jsp"%>
-  </form>
+  </form:form>
 </body>
 </html>

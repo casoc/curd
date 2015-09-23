@@ -4,8 +4,8 @@ import com.demo.curd.entity.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -18,42 +18,44 @@ public class ArticlesController {
     @Autowired
     private HibernateTemplate hibernateTemplate;
 
-    @RequestMapping(value = "/article/{id}", method = GET)
-    public String show(Map<String, Article> map, @RequestParam(required = true) Integer id) {
-        Article article = hibernateTemplate.get(Article.class, id);
-        map.put("article", article);
-        return "show";
-    }
-
     @RequestMapping(value = "/articles", method = GET)
     public String index(Map<String, List<Article>> map) {
         List<Article> list = hibernateTemplate.find("from Article article");
         map.put("articles", list);
-        return "show";
+        return "website/index";
     }
 
     @RequestMapping(value = "/articles/new", method = GET)
-    public String newArticle() {
+    public String newArticle(Map<String, Article> map) {
+        map.put("article", new Article());
         return "website/new";
     }
 
     @RequestMapping(value = "/articles", method = POST)
-    public String create(Map<String, Article> map, @RequestParam Article article) {
+    public String create(Map<String, List<Article>> map, Article article) {
         hibernateTemplate.save(article);
-        map.put("article", article);
-        return "show";
+        return index(map);
     }
 
     @RequestMapping(value = "/article/{id}/edit", method = GET)
-    public String edit(Map<String, Article> map, @RequestParam Integer id) {
+    public String edit(Map<String, Article> map, @PathVariable Integer id) {
         Article article = hibernateTemplate.get(Article.class, id);
         map.put("article", article);
-        return "edit";
+        return "website/edit";
     }
 
     @RequestMapping(value = "/articles", method = PUT)
-    public String update(Map<String, Article> map, @RequestParam Article id) {
-        return "show";
+    public String update(Map<String, List<Article>> map, Article article) {
+        hibernateTemplate.saveOrUpdate(article);
+        return index(map);
+    }
+
+    @RequestMapping(value = "/article/{id}/delete", method = GET)
+    public String delete(Map<String, List<Article>> map, @PathVariable Integer id) {
+        Article article = new Article();
+        article.setId(id);
+        hibernateTemplate.delete(article);
+        return index(map);
     }
 
     public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
