@@ -14,10 +14,6 @@ import org.springframework.transaction.support.ResourceTransactionManager;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-
-/**
- * Created by swchen on 8/31/15.
- */
 public class DbConfig {
 
     @Autowired
@@ -35,6 +31,7 @@ public class DbConfig {
 
     @Bean
     public SessionFactory sessionFactory() throws Exception {
+        //Hibernate 3 use this class but 4 use LocalSessionFactoryBean
         AnnotationSessionFactoryBean sessionFactory = new AnnotationSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         Properties properties = new Properties();
@@ -44,21 +41,16 @@ public class DbConfig {
         properties.setProperty("hibernate.format_sql", env.getProperty("hibernate.format_sql"));
         sessionFactory.setHibernateProperties(properties);
         sessionFactory.setPackagesToScan(new String[] {"com.demo.curd.entity"});
-        sessionFactory.afterPropertiesSet();
+        sessionFactory.afterPropertiesSet(); //if don't call this method you will can't get right SessionFactory object
         return sessionFactory.getObject();
     }
 
     @Bean
     public HibernateTemplate hibernateTemplate() throws Exception {
+        //for Hibernate 4, Spring team thought it's transaction is very well so encourage to use Session and don't need HibernateTemplate
         HibernateTemplate hibernateTemplate = new HibernateTemplate();
         hibernateTemplate.setSessionFactory(sessionFactory());
         return hibernateTemplate;
-    }
-
-    @Bean
-    public JdbcTemplate jdbcTemplate() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource());
-        return jdbcTemplate;
     }
 
     @Bean

@@ -52,9 +52,8 @@ public class ArticlesController {
 
     @RequestMapping(value = "/article/{id}/delete", method = GET)
     public String delete(Map<String, List<Article>> map, @PathVariable Integer id) {
-        Article article = new Article();
-        article.setId(id);
-        hibernateTemplate.delete(article);
+        List<Article> list = hibernateTemplate.find("from Article artile where artile.id=?", id);
+        hibernateTemplate.delete(list.get(0));
         return index(map);
     }
 
