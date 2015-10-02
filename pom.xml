@@ -22,9 +22,9 @@
     <!-- use china mirror -->
     <repositories>
         <repository>
-            <id>maven-net-cn</id>
-            <name>Maven China Mirror</name>
-            <url>http://maven.net.cn/content/groups/public/</url>
+            <id>maven.oschina.net</id>
+            <name>Oschina Central Mirror</name>
+            <url>http://maven.oschina.net/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -35,9 +35,9 @@
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>maven-net-cn</id>
-            <name>Maven China Mirror</name>
-            <url>http://maven.net.cn/content/groups/public/</url>
+            <id>maven.oschina.net</id>
+            <name>Oschina Central Mirror</name>
+            <url>http://maven.oschina.net/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
